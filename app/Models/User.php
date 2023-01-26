@@ -70,7 +70,7 @@ class User extends Authenticatable
 
     public function escritorio()
     {
-        return $this->belongsTo(Perfil::class);
+        return $this->belongsTo(Escritorio::class);
     } 
 
     public function users_filiais()

@@ -19,6 +19,16 @@ class VarasController extends Controller
         return Vara::orderBy('nome')->get();
     }
 
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function where($id)
+    {
+        return Vara::where('comarca_id', $id)->orderBy('nome')->get();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -66,9 +76,12 @@ class VarasController extends Controller
             $log->fk = $data->id;
             $log->object = $data;
             $log->save();
-            return 1;
+            return response()->json('Vara cadastrada com sucesso!', 200);
         }else{
-            return 2;
+            $erro = "Não foi possivel realizar o cadastro!";
+            $cod = 171;
+            $resposta = ['erro' => $erro, 'cod' => $cod];
+            return response()->json($resposta, 404);
         }
     }
 
@@ -132,9 +145,12 @@ class VarasController extends Controller
             $log->object = $data;
             $log->object_old = $dataold;
             $log->save();
-            return 1;
+           return response()->json('Vara editada com sucesso!', 200);
         }else{
-            return 2;
+            $erro = "Não foi possivel realizar a edição!";
+            $cod = 171;
+            $resposta = ['erro' => $erro, 'cod' => $cod];
+            return response()->json($resposta, 404);
         }
     }
 
@@ -157,9 +173,12 @@ class VarasController extends Controller
             $log->fk = $data->id;
             $log->object = $data;
             $log->save();
-            return 1;
+            return response()->json('Vara excluída com sucesso!', 200);
           }else{
-            return 2;
+            $erro = "Não foi possivel realizar a edição!";
+            $cod = 171;
+            $resposta = ['erro' => $erro, 'cod' => $cod];
+            return response()->json($resposta, 404);
           }
     }
 }

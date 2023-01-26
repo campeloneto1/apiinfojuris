@@ -52,9 +52,12 @@ class NaturezasController extends Controller
             $log->fk = $data->id;
             $log->object = $data;
             $log->save();
-            return 1;
+            return response()->json('Natureza cadastrada com sucesso!', 200);
         }else{
-            return 2;
+            $erro = "Não foi possivel realizar o cadastro!";
+            $cod = 171;
+            $resposta = ['erro' => $erro, 'cod' => $cod];
+            return response()->json($resposta, 404);
         }
     }
 
@@ -106,9 +109,12 @@ class NaturezasController extends Controller
             $log->object = $data;
             $log->object_old = $dataold;
             $log->save();
-            return 1;
+            return response()->json('Natureza editada com sucesso!', 200);
         }else{
-            return 2;
+            $erro = "Não foi possivel realizar a edição!";
+            $cod = 171;
+            $resposta = ['erro' => $erro, 'cod' => $cod];
+            return response()->json($resposta, 404);
         }
     }
 
@@ -131,9 +137,12 @@ class NaturezasController extends Controller
             $log->fk = $data->id;
             $log->object = $data;
             $log->save();
-            return 1;
+            return response()->json('Natureza excluída com sucesso!', 200);
           }else{
-            return 2;
+            $erro = "Não foi possivel realizar a exclusão!";
+            $cod = 171;
+            $resposta = ['erro' => $erro, 'cod' => $cod];
+            return response()->json($resposta, 404);
           }
     }
 }

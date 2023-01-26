@@ -58,4 +58,9 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::resource('users', UsersController::class);
     Route::resource('users-filiais', UsersFiliaisController::class);
     Route::resource('varas', VarasController::class);
+
+    Route::get('cidades/{id}/where',  [CidadesController::class, 'where']);
+    Route::get('comarcas/{id}/where',  [ComarcasController::class, 'where']);
+    Route::get('estados/{id}/where',  [EstadosController::class, 'where']);
+    Route::get('varas/{id}/where',  [VarasController::class, 'where']);
 });

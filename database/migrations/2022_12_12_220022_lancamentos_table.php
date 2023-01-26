@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::create('processos', function (Blueprint $table) {
+        Schema::create('lancamentos', function (Blueprint $table) {
             $table->id();
            
             $table->foreignId('escritorio_id')->nullable()->constrained('escritorios')->onUpdate('cascade')->onDelete('set null');           

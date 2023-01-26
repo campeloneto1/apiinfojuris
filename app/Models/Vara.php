@@ -14,7 +14,7 @@ class Vara extends Model
      *
      * @var string
      */
-    protected $table = 'caras';
+    protected $table = 'varas';
 
     /**
      * The attributes that are mass assignable.

@@ -14,7 +14,7 @@ class Pais extends Model
      *
      * @var string
      */
-    protected $table = 'pais';
+    protected $table = 'paises';
 
     /**
      * The attributes that are mass assignable.
