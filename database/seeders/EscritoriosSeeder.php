@@ -16,9 +16,9 @@ class EscritoriosSeeder extends Seeder
     public function run()
     {
         $init = [
-            0 => [ 'nome' => 'Escritorio 01', 'cnpj' => '000000001/0001', 'key' => bcrypt('000000001/0001')],
-            2 => [ 'nome' => 'Escritorio 02', 'cnpj' => '000000002/0002', 'key' => bcrypt('000000002/0002')],
-            3 => [ 'nome' => 'Escritorio 03', 'cnpj' => '000000003/0003', 'key' => bcrypt('000000003/0003')],
+            0 => [ 'nome' => 'Escritorio 01', 'cnpj' => '0000000010001', 'key' => bcrypt('0000000010001')],
+            2 => [ 'nome' => 'Escritorio 02', 'cnpj' => '0000000020002', 'key' => bcrypt('0000000020002')],
+            3 => [ 'nome' => 'Escritorio 03', 'cnpj' => '0000000030003', 'key' => bcrypt('0000000030003')],
         ];
         DB::table('escritorios')->insert($init);
     }

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AdministracaoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AudienciasController;
 use App\Http\Controllers\CidadesController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\ComarcasController;
 use App\Http\Controllers\EscritoriosController;
 use App\Http\Controllers\EstadosController;
 use App\Http\Controllers\FiliaisController;
+use App\Http\Controllers\LancamentosController;
 use App\Http\Controllers\LogsController;
 use App\Http\Controllers\NaturezasController;
 use App\Http\Controllers\OcupacoesController;
@@ -41,6 +43,7 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('/logout', [AuthController::class, 'logout']); 
     Route::get('/check', [AuthController::class, 'check']); 
 
+    Route::resource('administracao', AdministracaoController::class);
     Route::resource('audiencias', AudienciasController::class);
     Route::resource('cidades', CidadesController::class);
     Route::resource('clientes', ClientesController::class);
@@ -48,6 +51,7 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::resource('escritorios', EscritoriosController::class);
     Route::resource('estados', EstadosController::class);
     Route::resource('filiais', FiliaisController::class);
+    Route::resource('lancamentos', LancamentosController::class);
     Route::resource('logs', LogsController::class);
     Route::resource('naturezas', NaturezasController::class);
     Route::resource('ocupacoes', OcupacoesController::class);

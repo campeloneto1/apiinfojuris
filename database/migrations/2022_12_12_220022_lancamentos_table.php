@@ -20,10 +20,11 @@ return new class extends Migration
             $table->foreignId('escritorio_id')->nullable()->constrained('escritorios')->onUpdate('cascade')->onDelete('set null');           
             $table->string('codigo', 50)->unique();            
             $table->decimal('valor',10,2);
-            $table->decimal('valor_pago',10,2);
-            $table->date('data');
+            $table->decimal('valor_liquido',10,2);
+            $table->decimal('valor_pago',10,2)->nullable();
+            //$table->date('data');
             $table->date('data_vencimento');
-            $table->date('data_pagamento');
+            $table->date('data_pagamento')->nullable();
             $table->decimal('desconto',5,2)->nullable();
             $table->decimal('porcentagem',5,2)->nullable();
             $table->string('pagseguro_id', 50)->nullable();
@@ -45,6 +46,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('processos');
+        Schema::dropIfExists('lancamentos');
     }
 };
