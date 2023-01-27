@@ -37,11 +37,12 @@ class ProcessosController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
         $data = new Processo;
 
-        $data->autor = $request->autor;   
-        $data->reu = $request->reu;   
-        $data->escritorio_id = $request->escritorio_id;  
+        $data->escritorio_id = $user->escritorio_id;    
+        $data->autor_id = $request->autor_id;   
+        $data->reu_id = $request->reu_id;           
         $data->natureza_id = $request->natureza_id;  
         $data->vara_id = $request->vara_id;  
         $data->codigo = $request->codigo;   
@@ -106,9 +107,8 @@ class ProcessosController extends Controller
         $data = Processo::find($id);
         $dataold = $data;
 
-        $data->autor = $request->autor;   
-        $data->reu = $request->reu;   
-        $data->escritorio_id = $request->escritorio_id;  
+        $data->autor_id = $request->autor_id;   
+        $data->reu_id = $request->reu_id;   
         $data->natureza_id = $request->natureza_id;  
         $data->vara_id = $request->vara_id;  
         $data->codigo = $request->codigo;   

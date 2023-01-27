@@ -14,13 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::create('clientes', function (Blueprint $table) {
+        Schema::create('pessoas', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('escritorio_id')->nullable()->constrained('escritorios')->onUpdate('cascade')->onDelete('set null');
             $table->string('nome', 100);
             $table->string('email', 100)->nullable();
-            $table->integer('cpf');
+            $table->string('cpf', 11);
             $table->date('data_nascimento')->nullable();
             $table->string('telefone1', 12)->nullable();
             $table->string('telefone2', 12)->nullable();
@@ -28,7 +28,7 @@ return new class extends Migration
 
             $table->integer('estado_civil')->nullable();
             $table->integer('sexo_id')->nullable();
-            $table->foreignId('nacionalidade')->nullable()->constrained('cidades')->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('nacionalidade_id')->nullable()->constrained('cidades')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('ocupacao_id')->nullable()->constrained('ocupacoes')->onUpdate('cascade')->onDelete('set null');
             $table->string('mae', 100)->nullable();
             $table->string('pai', 100)->nullable();
@@ -60,6 +60,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clientes');
+        Schema::dropIfExists('pessoas');
     }
 };

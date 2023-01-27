@@ -1,0 +1,24 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class SexosSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $init = [
+            0 => [ 'nome' => 'Masculino' ],
+            1 => [ 'nome' => 'Feminino' ],
+            2 => [ 'nome' => 'Não Informado' ],
+        ];
+        DB::table('sexos')->insert($init);
+    }
+}

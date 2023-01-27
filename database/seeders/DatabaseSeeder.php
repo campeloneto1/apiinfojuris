@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         $this->call([            
+            StatusSeeder::class, 
+            SexosSeeder::class, 
+            EstadoCivisSeeder::class, 
             TribunaisSeeder::class,
             ComarcasSeeder::class,
             VarasSeeder::class,

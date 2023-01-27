@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Cliente;
+use App\Models\Pessoa;
 use App\Models\Log;
 
-class ClientesController extends Controller
+class PessoasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class ClientesController extends Controller
      */
     public function index()
     {
-        return Cliente::orderBy('nome')->get();
+        return Pessoa::orderBy('nome')->get();
     }
 
     /**
@@ -37,9 +37,10 @@ class ClientesController extends Controller
      */
     public function store(Request $request)
     {
-        $data = new Cliente;
+        $user = Auth::user();
+        $data = new Pessoa;
 
-        $data->escritorio_id = $request->escritorio_id;     
+        $data->escritorio_id = $user->escritorio_id;     
         $data->nome = $request->nome;
         $data->email = $request->email;
         $data->cpf = $request->cpf;    
@@ -49,7 +50,7 @@ class ClientesController extends Controller
 
         $data->estado_civil = $request->estado_civil;
         $data->sexo_id = $request->sexo_id;
-        $data->nacionalidade = $request->nacionalidade;
+        $data->nacionalidade_id = $request->nacionalidade_id;
         $data->ocupacao_id = $request->ocupacao_id;
         $data->mae = $request->mae;
         $data->pai = $request->pai;
@@ -69,13 +70,13 @@ class ClientesController extends Controller
         if($data->save()){
             $log = new Log;
             $log->user_id = Auth::id();
-            $log->mensagem = 'Cadastrou um Cliente';
+            $log->mensagem = 'Cadastrou um Pessoa';
             $log->table = 'clientes';
             $log->action = 1;
             $log->fk = $data->id;
             $log->object = $data;
             $log->save();
-            return response()->json('Cliente cadastrado com sucesso!', 200);
+            return response()->json('Pessoa cadastrado com sucesso!', 200);
         }else{
             $erro = "Não foi possivel realizar o cadastro!";
             $cod = 171;
@@ -92,7 +93,7 @@ class ClientesController extends Controller
      */
     public function show($id)
     {
-        return Cliente::find($id);
+        return Pessoa::find($id);
     }
 
     /**
@@ -115,10 +116,9 @@ class ClientesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = Cliente::find($id);
+        $data = Pessoa::find($id);
         $dataold = $data;
 
-        $data->escritorio_id = $request->escritorio_id;     
         $data->nome = $request->nome;
         $data->email = $request->email;
         $data->cpf = $request->cpf;    
@@ -128,7 +128,7 @@ class ClientesController extends Controller
 
         $data->estado_civil = $request->estado_civil;
         $data->sexo_id = $request->sexo_id;
-        $data->nacionalidade = $request->nacionalidade;
+        $data->nacionalidade_id = $request->nacionalidade_id;
         $data->ocupacao_id = $request->ocupacao_id;
         $data->mae = $request->mae;
         $data->pai = $request->pai;
@@ -149,14 +149,14 @@ class ClientesController extends Controller
         if($data->save()){
             $log = new Log;
             $log->user_id = Auth::id();
-            $log->mensagem = 'Editou um Cliente';
+            $log->mensagem = 'Editou um Pessoa';
             $log->table = 'clientes';
             $log->action = 2;
             $log->fk = $data->id;
             $log->object = $data;
             $log->object_old = $dataold;
             $log->save();
-            return response()->json('Cliente editado com sucesso!', 200);
+            return response()->json('Pessoa editado com sucesso!', 200);
         }else{
             $erro = "Não foi possivel realizar a edição!";
             $cod = 171;
@@ -173,18 +173,18 @@ class ClientesController extends Controller
      */
     public function destroy($id)
     {
-        $data = Cliente::find($id);
+        $data = Pessoa::find($id);
          
          if($data->delete()){
             $log = new Log;
             $log->user_id = Auth::id();
-            $log->mensagem = 'Excluiu um Cliente';
+            $log->mensagem = 'Excluiu um Pessoa';
             $log->table = 'clientes';
             $log->action = 3;
             $log->fk = $data->id;
             $log->object = $data;
             $log->save();
-            return response()->json('Cliente excluído com sucesso!', 200);
+            return response()->json('Pessoa excluído com sucesso!', 200);
           }else{
             $erro = "Não foi possivel realizar a exclusão!";
             $cod = 171;

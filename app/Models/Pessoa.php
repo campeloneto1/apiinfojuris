@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cliente extends Model
+class Pessoa extends Model
 {
     use HasFactory;
 
@@ -14,7 +14,7 @@ class Cliente extends Model
      *
      * @var string
      */
-    protected $table = 'clientes';
+    protected $table = 'pessoas';
 
     /**
      * The attributes that are mass assignable.
@@ -57,7 +57,7 @@ class Cliente extends Model
 
     public function nacionalidade()
     {
-        return $this->belongsTo(Cidade::class, 'nacionalidade');
+        return $this->belongsTo(Cidade::class, 'nacionalidade_id');
     }
 
     public function ocupacao()

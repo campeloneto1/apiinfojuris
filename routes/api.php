@@ -46,7 +46,6 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::resource('administracao', AdministracaoController::class);
     Route::resource('audiencias', AudienciasController::class);
     Route::resource('cidades', CidadesController::class);
-    Route::resource('clientes', ClientesController::class);
     Route::resource('comarcas', ComarcasController::class);
     Route::resource('escritorios', EscritoriosController::class);
     Route::resource('estados', EstadosController::class);
@@ -57,6 +56,7 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::resource('ocupacoes', OcupacoesController::class);
     Route::resource('paises', PaisesController::class);
     Route::resource('perfis', PerfisController::class);
+    Route::resource('pessoas', PessoasController::class);
     Route::resource('processos', ProcessosController::class);
     Route::resource('tribunais', TribunaisController::class);
     Route::resource('users', UsersController::class);

@@ -37,16 +37,12 @@ class Processo extends Model
      *
      * @var array
      */
-    protected $with = ['autor', 'reu', 'escritorio', 'natureza', 'vara'];
+    protected $with = ['pessoas', 'escritorio', 'natureza', 'vara'];
 
-    public function autor()
-    {
-        return $this->belongsTo(User::class, 'autor');
-    }
 
-    public function reu()
+    public function pessoas()
     {
-        return $this->belongsTo(User::class, 'reu');
+        return $this->hasMany(Pessoas::class);
     }
 
     public function escritorio()
