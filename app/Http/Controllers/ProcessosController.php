@@ -16,7 +16,13 @@ class ProcessosController extends Controller
      */
     public function index()
     {
-        return Processo::orderBy('id', 'desc')->get();
+        //return Processo::orderBy('id', 'desc')->get();
+        $user = Auth::user();
+        if($user->perfil->administrador){
+             return Processo::orderBy('id', 'desc')->get();
+        }else{ 
+            return Processo::where('escritorio_id', $user->escritorio_id)->orderBy('id', 'desc')->get(); 
+        }   
     }
 
     /**
@@ -27,6 +33,38 @@ class ProcessosController extends Controller
     public function create()
     {
         //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function changeStatus(Request $request)
+    {
+        $data = Processo::find($request->id);
+        $dataold = $data;
+
+        $data->status_id = $request->status_id;         
+        $data->updated_by = Auth::id();      
+
+        if($data->save()){
+            $log = new Log;
+            $log->user_id = Auth::id();
+            $log->mensagem = 'Editou o status de um Processo';
+            $log->table = 'processos';
+            $log->action = 2;
+            $log->fk = $data->id;
+            $log->object = $data;
+            $log->object_old = $dataold;
+            $log->save();
+            return response()->json('Status modificado com sucesso!', 200);
+        }else{
+            $erro = "Não foi possivel realizar a edição!";
+            $cod = 171;
+            $resposta = ['erro' => $erro, 'cod' => $cod];
+            return response()->json($resposta, 404);
+        }
     }
 
     /**
@@ -41,15 +79,15 @@ class ProcessosController extends Controller
         $data = new Processo;
 
         $data->escritorio_id = $user->escritorio_id;    
-        $data->autor_id = $request->autor_id;   
-        $data->reu_id = $request->reu_id;           
+        //$data->autor_id = $request->autor_id;   
+        //$data->reu_id = $request->reu_id;           
         $data->natureza_id = $request->natureza_id;  
         $data->vara_id = $request->vara_id;  
         $data->codigo = $request->codigo;   
         $data->valor = $request->valor;  
         $data->data = $request->data;  
         $data->obs = $request->obs;  
-        $data->status = 1;  
+        $data->status_id = 1;  
 
         $data->key = bcrypt($request->codigo);  
 
@@ -81,7 +119,7 @@ class ProcessosController extends Controller
      */
     public function show($id)
     {
-        return Processo::find($id);
+        return Processo::with('audiencias')->find($id);
     }
 
     /**
@@ -107,8 +145,8 @@ class ProcessosController extends Controller
         $data = Processo::find($id);
         $dataold = $data;
 
-        $data->autor_id = $request->autor_id;   
-        $data->reu_id = $request->reu_id;   
+        //$data->autor_id = $request->autor_id;   
+       //$data->reu_id = $request->reu_id;   
         $data->natureza_id = $request->natureza_id;  
         $data->vara_id = $request->vara_id;  
         $data->codigo = $request->codigo;   

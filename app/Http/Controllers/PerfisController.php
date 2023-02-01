@@ -43,6 +43,36 @@ class PerfisController extends Controller
         $data->administrador = $request->administrador;   
         $data->gestor = $request->gestor;   
 
+        $data->audiencias = $request->audiencias;  
+        $data->audiencias_cad = $request->audiencias_cad;  
+        $data->audiencias_edt = $request->audiencias_edt;  
+        $data->audiencias_del = $request->audiencias_del;  
+
+        $data->filiais = $request->filiais;  
+        $data->filiais_cad = $request->filiais_cad;  
+        $data->filiais_edt = $request->filiais_edt;  
+        $data->filiais_del = $request->filiais_del; 
+
+        $data->lancamentos = $request->lancamentos;  
+        $data->lancamentos_cad = $request->lancamentos_cad;  
+        $data->lancamentos_edt = $request->lancamentos_edt;  
+        $data->lancamentos_del = $request->lancamentos_del; 
+
+        $data->pessoas = $request->pessoas;  
+        $data->pessoas_cad = $request->pessoas_cad;  
+        $data->pessoas_edt = $request->pessoas_edt;  
+        $data->pessoas_del = $request->pessoas_del; 
+
+        $data->processos = $request->processos;  
+        $data->processos_cad = $request->processos_cad;  
+        $data->processos_edt = $request->processos_edt;  
+        $data->processos_del = $request->processos_del; 
+
+        $data->usuarios = $request->usuarios;  
+        $data->usuarios_cad = $request->usuarios_cad;  
+        $data->usuarios_edt = $request->usuarios_edt;  
+        $data->usuarios_del = $request->usuarios_del; 
+
         $data->created_by = Auth::id();      
 
         if($data->save()){
@@ -100,6 +130,40 @@ class PerfisController extends Controller
         $data->nome = $request->nome;   
         $data->administrador = $request->administrador;   
         $data->gestor = $request->gestor;   
+
+        $data->nome = $request->nome;   
+        $data->administrador = $request->administrador;   
+        $data->gestor = $request->gestor;   
+
+        $data->audiencias = $request->audiencias;  
+        $data->audiencias_cad = $request->audiencias_cad;  
+        $data->audiencias_edt = $request->audiencias_edt;  
+        $data->audiencias_del = $request->audiencias_del;  
+
+        $data->filiais = $request->filiais;  
+        $data->filiais_cad = $request->filiais_cad;  
+        $data->filiais_edt = $request->filiais_edt;  
+        $data->filiais_del = $request->filiais_del; 
+
+        $data->lancamentos = $request->lancamentos;  
+        $data->lancamentos_cad = $request->lancamentos_cad;  
+        $data->lancamentos_edt = $request->lancamentos_edt;  
+        $data->lancamentos_del = $request->lancamentos_del; 
+
+        $data->pessoas = $request->pessoas;  
+        $data->pessoas_cad = $request->pessoas_cad;  
+        $data->pessoas_edt = $request->pessoas_edt;  
+        $data->pessoas_del = $request->pessoas_del; 
+
+        $data->processos = $request->processos;  
+        $data->processos_cad = $request->processos_cad;  
+        $data->processos_edt = $request->processos_edt;  
+        $data->processos_del = $request->processos_del; 
+
+        $data->usuarios = $request->usuarios;  
+        $data->usuarios_cad = $request->usuarios_cad;  
+        $data->usuarios_edt = $request->usuarios_edt;  
+        $data->usuarios_del = $request->usuarios_del; 
 
 
         $data->updated_by = Auth::id();      

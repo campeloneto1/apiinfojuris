@@ -25,9 +25,8 @@ return new class extends Migration
             $table->string('telefone1', 12)->nullable();
             $table->string('telefone2', 12)->nullable();
             
-
-            $table->integer('estado_civil')->nullable();
-            $table->integer('sexo_id')->nullable();
+            $table->foreignId('estado_civil_id')->nullable()->constrained('estados_civis')->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('sexo_id')->nullable()->constrained('sexos')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('nacionalidade_id')->nullable()->constrained('cidades')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('ocupacao_id')->nullable()->constrained('ocupacoes')->onUpdate('cascade')->onDelete('set null');
             $table->string('mae', 100)->nullable();

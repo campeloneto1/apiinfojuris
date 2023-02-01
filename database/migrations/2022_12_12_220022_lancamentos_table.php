@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
            
             $table->foreignId('escritorio_id')->nullable()->constrained('escritorios')->onUpdate('cascade')->onDelete('set null');           
-            $table->string('codigo', 50)->unique();            
+            $table->integer('codigo');            
             $table->decimal('valor',10,2);
             $table->decimal('valor_liquido',10,2);
             $table->decimal('valor_pago',10,2)->nullable();
@@ -35,6 +35,8 @@ return new class extends Migration
             $table->foreignId('created_by')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('updated_by')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
+
+             $table->unique(['escritorio_id', 'codigo']); 
         });
         Schema::enableForeignKeyConstraints();
     }

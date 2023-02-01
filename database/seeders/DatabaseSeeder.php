@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call([            
             StatusSeeder::class, 
             SexosSeeder::class, 
-            EstadoCivisSeeder::class, 
+            EstadosCivisSeeder::class, 
             TribunaisSeeder::class,
             ComarcasSeeder::class,
             VarasSeeder::class,

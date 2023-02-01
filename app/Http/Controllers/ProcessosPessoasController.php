@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\ProcessoPessoa;
+use App\Models\Log;
 
 class ProcessosPessoasController extends Controller
 {
@@ -14,7 +17,7 @@ class ProcessosPessoasController extends Controller
      */
     public function index()
     {
-        //
+        return ProcessoPessoa::orderBy('id', 'desc')->get();
     }
 
     /**
@@ -35,7 +38,30 @@ class ProcessosPessoasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new ProcessoPessoa;
+
+        $data->processo_id = $request->processo_id;    
+        $data->pessoa_id = $request->pessoa_id;  
+        $data->tipo_id = $request->tipo_id;   
+
+        $data->created_by = Auth::id();      
+
+        if($data->save()){
+            $log = new Log;
+            $log->user_id = Auth::id();
+            $log->mensagem = 'Cadastrou uma Pessoa no Processo';
+            $log->table = 'processos_pessoas';
+            $log->action = 1;
+            $log->fk = $data->id;
+            $log->object = $data;
+            $log->save();
+            return response()->json('Pessoa cadastrada com sucesso!', 200);
+        }else{
+            $erro = "Não foi possivel realizar o cadastro!";
+            $cod = 171;
+            $resposta = ['erro' => $erro, 'cod' => $cod];
+            return response()->json($resposta, 404);
+        }
     }
 
     /**
@@ -46,7 +72,7 @@ class ProcessosPessoasController extends Controller
      */
     public function show($id)
     {
-        //
+        return ProcessoPessoa::find($id);
     }
 
     /**
@@ -69,7 +95,31 @@ class ProcessosPessoasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = ProcessoPessoa::find($id);
+        $dataold = $data;
+
+        $data->processo_id = $request->processo_id;    
+        $data->pessoa_id = $request->pessoa_id;   
+        $data->tipo_id = $request->tipo_id;   
+        $data->updated_by = Auth::id();      
+
+        if($data->save()){
+            $log = new Log;
+            $log->user_id = Auth::id();
+            $log->mensagem = 'Editou uma Pessoa no Processo';
+            $log->table = 'processos_pessoas';
+            $log->action = 2;
+            $log->fk = $data->id;
+            $log->object = $data;
+            $log->object_old = $dataold;
+            $log->save();
+            return response()->json('Pessoa editado com sucesso!', 200);
+        }else{
+            $erro = "Não foi possivel realizar a edição!";
+            $cod = 171;
+            $resposta = ['erro' => $erro, 'cod' => $cod];
+            return response()->json($resposta, 404);
+        }
     }
 
     /**
@@ -80,6 +130,23 @@ class ProcessosPessoasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = ProcessoPessoa::find($id);
+         
+        if($data->delete()){
+           $log = new Log;
+           $log->user_id = Auth::id();
+           $log->mensagem = 'Excluiu uma Pessoa do Processo';
+           $log->table = 'processos_pessoas';
+           $log->action = 3;
+           $log->fk = $data->id;
+           $log->object = $data;
+           $log->save();
+           return response()->json('Pessoa excluído com sucesso!', 200);
+         }else{
+           $erro = "Não foi possivel realizar a exclusão!";
+            $cod = 171;
+            $resposta = ['erro' => $erro, 'cod' => $cod];
+            return response()->json($resposta, 404);
+         }
     }
 }

@@ -14,18 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::create('users_filiais', function (Blueprint $table) {
+        Schema::create('audiencias_pessoas', function (Blueprint $table) {
             $table->id();
+           
+            $table->foreignId('audiencia_id')->nullable()->constrained('audiencias')->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('pessoa_id')->nullable()->constrained('pessoas')->onUpdate('cascade')->onDelete('set null');
 
-            $table->foreignId('user_id')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('filial_id')->nullable()->constrained('filiais')->onUpdate('cascade')->onDelete('set null');
-
-            
-           $table->foreignId('created_by')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('created_by')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('updated_by')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
 
-            $table->unique(['user_id', 'filial_id']); 
+            $table->unique(['audiencia_id', 'pessoa_id']); 
         });
         Schema::enableForeignKeyConstraints();
     }
@@ -37,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_filiais');
+        Schema::dropIfExists('processos_pessoas');
     }
 };

@@ -37,17 +37,29 @@ class Processo extends Model
      *
      * @var array
      */
-    protected $with = ['pessoas', 'escritorio', 'natureza', 'vara'];
+    protected $with = ['pessoas', 'escritorio', 'natureza', 'vara', 'status'];
 
+
+     public function audiencias()
+    {
+        return $this->hasMany(Audiencia::class, 'processo_id');
+        //return $this->hasMany(IrsoUser::class, 'user_id');
+    }
 
     public function pessoas()
     {
-        return $this->hasMany(Pessoas::class);
+        return $this->belongsToMany(Pessoa::class, 'processos_pessoas', 'processo_id', 'pessoa_id')->withPivot('id', 'tipo_id');
+        //return $this->hasMany(IrsoUser::class, 'user_id');
     }
 
     public function escritorio()
     {
         return $this->belongsTo(Escritorio::class);
+    }
+
+     public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 
     public function natureza()

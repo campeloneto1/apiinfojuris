@@ -37,12 +37,24 @@ class Audiencia extends Model
      *
      * @var array
      */
-    protected $with = ['processo'];
+    protected $with = ['processo', 'status', 'pessoas'];
 
     
     public function processo()
     {
         return $this->belongsTo(Processo::class);
+    }
+
+    public function pessoas()
+    {
+        return $this->belongsToMany(Pessoa::class, 'audiencias_pessoas', 'audiencia_id', 'pessoa_id')->withPivot('id');
+        //return $this->hasMany(IrsoUser::class, 'user_id');
+    }
+
+
+      public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 
     public function created_by()

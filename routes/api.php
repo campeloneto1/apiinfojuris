@@ -6,19 +6,24 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdministracaoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AudienciasController;
+use App\Http\Controllers\AudienciasPessoasController;
 use App\Http\Controllers\CidadesController;
-use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\ComarcasController;
 use App\Http\Controllers\EscritoriosController;
 use App\Http\Controllers\EstadosController;
+use App\Http\Controllers\EstadosCivisController;
 use App\Http\Controllers\FiliaisController;
 use App\Http\Controllers\LancamentosController;
 use App\Http\Controllers\LogsController;
 use App\Http\Controllers\NaturezasController;
 use App\Http\Controllers\OcupacoesController;
 use App\Http\Controllers\PaisesController;
+use App\Http\Controllers\PessoasController;
 use App\Http\Controllers\PerfisController;
 use App\Http\Controllers\ProcessosController;
+use App\Http\Controllers\ProcessosPessoasController;
+use App\Http\Controllers\StatusController;
+use App\Http\Controllers\SexosController;
 use App\Http\Controllers\TribunaisController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UsersFiliaisController;
@@ -45,10 +50,12 @@ Route::group(['middleware' => ['auth:api']], function() {
 
     Route::resource('administracao', AdministracaoController::class);
     Route::resource('audiencias', AudienciasController::class);
+    Route::resource('audiencias-pessoas', AudienciasPessoasController::class);
     Route::resource('cidades', CidadesController::class);
     Route::resource('comarcas', ComarcasController::class);
     Route::resource('escritorios', EscritoriosController::class);
     Route::resource('estados', EstadosController::class);
+    Route::resource('estados-civis', EstadosCivisController::class);
     Route::resource('filiais', FiliaisController::class);
     Route::resource('lancamentos', LancamentosController::class);
     Route::resource('logs', LogsController::class);
@@ -58,6 +65,9 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::resource('perfis', PerfisController::class);
     Route::resource('pessoas', PessoasController::class);
     Route::resource('processos', ProcessosController::class);
+    Route::resource('processos-pessoas', ProcessosPessoasController::class);
+    Route::resource('sexos', SexosController::class);
+    Route::resource('status', StatusController::class);
     Route::resource('tribunais', TribunaisController::class);
     Route::resource('users', UsersController::class);
     Route::resource('users-filiais', UsersFiliaisController::class);
@@ -65,6 +75,8 @@ Route::group(['middleware' => ['auth:api']], function() {
 
     Route::get('cidades/{id}/where',  [CidadesController::class, 'where']);
     Route::get('comarcas/{id}/where',  [ComarcasController::class, 'where']);
-    Route::get('estados/{id}/where',  [EstadosController::class, 'where']);
+    Route::get('estados/{id}/where',  [EstadosController::class, 'where']);    
     Route::get('varas/{id}/where',  [VarasController::class, 'where']);
+
+    Route::post('processos-status',  [ProcessosController::class, 'changeStatus']);
 });

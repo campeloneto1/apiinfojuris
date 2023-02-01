@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Filial;
+use App\Models\AudienciaPessoa;
 use App\Models\Log;
 
-
-class FiliaisController extends Controller
+class AudienciasPessoasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,13 +17,7 @@ class FiliaisController extends Controller
      */
     public function index()
     {
-        //return Filial::orderBy('nome')->get();
-        $user = Auth::user();
-        if($user->perfil->administrador){
-             return Filial::orderBy('nome', 'asc')->get();
-        }else{ 
-            return Filial::where('escritorio_id', $user->escritorio_id)->orderBy('nome', 'asc')->get(); 
-        }   
+        return AudienciaPessoa::orderBy('id', 'desc')->get();
     }
 
     /**
@@ -44,37 +38,25 @@ class FiliaisController extends Controller
      */
     public function store(Request $request)
     {
-        $data = new Filial;
+        $data = new AudienciaPessoa;
 
-        $data->escritorio_id = $request->escritorio_id;
-        $data->nome = $request->nome;
-        $data->email = $request->email;
-        $data->telefone1 = $request->telefone1;
-        $data->telefone2 = $request->telefone2;
-
-        $data->key = bcrypt($request->escritorio_id.$request->nome);
-
-        $data->cep = $request->cep;
-        $data->rua = $request->rua;
-        $data->numero = $request->numero;
-        $data->bairro = $request->bairro;
-        $data->complemento = $request->complemento;
-        $data->cidade_id = $request->cidade_id;
+        $data->audiencia_id = $request->audiencia_id;    
+        $data->pessoa_id = $request->pessoa_id;  
 
         $data->created_by = Auth::id();      
 
         if($data->save()){
             $log = new Log;
             $log->user_id = Auth::id();
-            $log->mensagem = 'Cadastrou uma Filial';
-            $log->table = 'filiais';
+            $log->mensagem = 'Cadastrou uma Testemunha na Audiencia';
+            $log->table = 'audiencias_pessoas';
             $log->action = 1;
             $log->fk = $data->id;
             $log->object = $data;
             $log->save();
-            return response()->json('Filial cadastrada com sucesso!', 200);
+            return response()->json('Pessoa cadastrada com sucesso!', 200);
         }else{
-             $erro = "Não foi possivel realizar o cadastro!";
+            $erro = "Não foi possivel realizar o cadastro!";
             $cod = 171;
             $resposta = ['erro' => $erro, 'cod' => $cod];
             return response()->json($resposta, 404);
@@ -89,7 +71,7 @@ class FiliaisController extends Controller
      */
     public function show($id)
     {
-        return Filial::find($id);
+        return AudienciaPessoa::find($id);
     }
 
     /**
@@ -112,37 +94,24 @@ class FiliaisController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = Filial::find($id);
+        $data = AudienciaPessoa::find($id);
         $dataold = $data;
 
-        $data->escritorio_id = $request->escritorio_id;
-        $data->nome = $request->nome;
-        $data->email = $request->email;
-        $data->telefone1 = $request->telefone1;
-        $data->telefone2 = $request->telefone2;
-
-        //$data->key = bcrypt($request->escritorio_id.$request->nome);
-
-        $data->cep = $request->cep;
-        $data->rua = $request->rua;
-        $data->numero = $request->numero;
-        $data->bairro = $request->bairro;
-        $data->complemento = $request->complemento;
-        $data->cidade_id = $request->cidade_id;
-
+        $data->audiencia_id = $request->audiencia_id;    
+        $data->pessoa_id = $request->pessoa_id;   
         $data->updated_by = Auth::id();      
 
         if($data->save()){
             $log = new Log;
             $log->user_id = Auth::id();
-            $log->mensagem = 'Editou uma Filial';
-            $log->table = 'filiais';
+            $log->mensagem = 'Editou uma Pessoa na Audiencia';
+            $log->table = 'audiencias_pessoas';
             $log->action = 2;
             $log->fk = $data->id;
             $log->object = $data;
             $log->object_old = $dataold;
             $log->save();
-            return response()->json('Filial editada com sucesso!', 200);
+            return response()->json('Pessoa editado com sucesso!', 200);
         }else{
             $erro = "Não foi possivel realizar a edição!";
             $cod = 171;
@@ -159,23 +128,23 @@ class FiliaisController extends Controller
      */
     public function destroy($id)
     {
-        $data = Filial::find($id);
+        $data = AudienciaPessoa::find($id);
          
-         if($data->delete()){
-            $log = new Log;
-            $log->user_id = Auth::id();
-            $log->mensagem = 'Excluiu uma Filial';
-            $log->table = 'filiais';
-            $log->action = 3;
-            $log->fk = $data->id;
-            $log->object = $data;
-            $log->save();
-            return response()->json('Filial excluída com sucesso!', 200);
-          }else{
-            $erro = "Não foi possivel realizar a exclusão!";
+        if($data->delete()){
+           $log = new Log;
+           $log->user_id = Auth::id();
+           $log->mensagem = 'Excluiu uma Pessoa da Audiencia';
+           $log->table = 'audiencias_pessoas';
+           $log->action = 3;
+           $log->fk = $data->id;
+           $log->object = $data;
+           $log->save();
+           return response()->json('Pessoa excluído com sucesso!', 200);
+         }else{
+           $erro = "Não foi possivel realizar a exclusão!";
             $cod = 171;
             $resposta = ['erro' => $erro, 'cod' => $cod];
             return response()->json($resposta, 404);
-          }
+         }
     }
 }

@@ -23,14 +23,14 @@ return new class extends Migration
             $table->integer('tipo_id');  
             $table->string('link', 200)->nullable();
 
-            $table->string('rua', 100)->nullable();
+            /*$table->string('rua', 100)->nullable();
             $table->string('numero', 15)->nullable();
             $table->string('bairro', 50)->nullable();
             $table->string('complemento', 150)->nullable();
             $table->foreignId('cidade_id')->nullable()->constrained('cidades')->onUpdate('cascade')->onDelete('set null');
-            $table->string('cep', 10)->nullable();
+            $table->string('cep', 10)->nullable();*/
 
-            $table->integer('status')->default(1);
+            $table->foreignId('status_id')->nullable()->constrained('status')->onUpdate('cascade')->onDelete('set null');
 
             $table->text('obs')->nullable();
 

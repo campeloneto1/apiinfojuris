@@ -16,7 +16,13 @@ class PessoasController extends Controller
      */
     public function index()
     {
-        return Pessoa::orderBy('nome')->get();
+        //return Pessoa::orderBy('nome')->get();
+        $user = Auth::user();
+        if($user->perfil->administrador){
+             return Pessoa::orderBy('nome', 'asc')->get();
+        }else{ 
+            return Pessoa::where('escritorio_id', $user->escritorio_id)->orderBy('nome', 'asc')->get(); 
+        }   
     }
 
     /**
@@ -48,7 +54,7 @@ class PessoasController extends Controller
         $data->telefone1 = $request->telefone1;
         $data->telefone2 = $request->telefone2;
 
-        $data->estado_civil = $request->estado_civil;
+        $data->estado_civil_id = $request->estado_civil_id;
         $data->sexo_id = $request->sexo_id;
         $data->nacionalidade_id = $request->nacionalidade_id;
         $data->ocupacao_id = $request->ocupacao_id;
@@ -126,7 +132,7 @@ class PessoasController extends Controller
         $data->telefone1 = $request->telefone1;
         $data->telefone2 = $request->telefone2;
 
-        $data->estado_civil = $request->estado_civil;
+        $data->estado_civil_id = $request->estado_civil_id;
         $data->sexo_id = $request->sexo_id;
         $data->nacionalidade_id = $request->nacionalidade_id;
         $data->ocupacao_id = $request->ocupacao_id;

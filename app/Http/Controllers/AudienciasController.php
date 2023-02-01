@@ -17,7 +17,12 @@ class AudienciasController extends Controller
      */
     public function index()
     {
-        return Audiencia::orderBy('id', 'desc')->get();
+        $user = Auth::user();
+        if($user->perfil->administrador){
+             return Audiencia::orderBy('id', 'desc')->get();
+        }else{ 
+            return Audiencia::whereRelation('processo','escritorio_id', $user->escritorio_id)->orderBy('id', 'desc')->get(); 
+        }        
     }
 
     /**
@@ -45,18 +50,21 @@ class AudienciasController extends Controller
         $data->hora = $request->hora;      
         $data->tipo_id = $request->tipo_id;   
 
-        if($request->tipo_id == 1){
-            $data->rua = $request->rua;   
+        if($request->tipo_id == 2){
+            $data->link = $request->link; 
+             
+        }
+
+        /*
+        $data->rua = $request->rua;   
             $data->numero = $request->numero;   
             $data->bairro = $request->bairro;   
             $data->cidade_id = $request->cidade_id;   
             $data->complemento = $request->complemento;   
-            $data->cep = $request->cep;  
-        }else{
-            $data->link = $request->link; 
-        }
+            $data->cep = $request->cep; 
+            */
 
-        $data->status = $request->status;  
+        $data->status_id = 1;  
         $data->obs = $request->obs;  
         $data->key = bcrypt($request->processo_id.$request->data.$request->hora);  
 
@@ -119,16 +127,19 @@ class AudienciasController extends Controller
         $data->hora = $request->hora;      
         $data->tipo_id = $request->tipo_id;   
 
-        if($request->tipo_id == 1){
-            $data->rua = $request->rua;   
+         if($request->tipo_id == 2){
+            $data->link = $request->link; 
+             
+        }
+
+        /*
+        $data->rua = $request->rua;   
             $data->numero = $request->numero;   
             $data->bairro = $request->bairro;   
             $data->cidade_id = $request->cidade_id;   
             $data->complemento = $request->complemento;   
-            $data->cep = $request->cep;  
-        }else{
-            $data->link = $request->link; 
-        }
+            $data->cep = $request->cep; 
+            */
 
         //$data->status = $request->status;  
         $data->obs = $request->obs;  

@@ -42,8 +42,7 @@ class LancamentosController extends Controller
         $dt = Carbon::now();  
         $data = new Lancamento;
 
-        $data->escritorio_id = $request->escritorio_id;
-        //$cod =  Documento::where('documento_tipo_id', $request->documento_tipo_id)->whereYear('created_at', $hoje->format('Y'))->max('codigo');
+        $data->escritorio_id = $request->escritorio_id;        
         $cod = Lancamento::where('escritorio_id', $request->escritorio_id)->max('codigo');
         $data->codigo =  $cod+1;
         $valor = Administracao::where('status', 1)->select('valor')->limit(1)->get();
@@ -62,7 +61,8 @@ class LancamentosController extends Controller
         
         //$data->data = $request->data;
         
-        $data->data_vencimento = $dt->addMonth();
+        //$data->data_vencimento = $dt->addMonth();
+        $data->data_vencimento = $request->data_vencimento;
 
         $data->key = bcrypt($cod+1);
 
@@ -118,8 +118,7 @@ class LancamentosController extends Controller
         $dataold = $data;
 
         $data->escritorio_id = $request->escritorio_id;
-        //$data->codigo = Lancamento::where('escritorio_id', $request->escritorio_id)->select('codigo')->orderBy('id', 'desc')->limit(1)->get()[0]+1;
-        //$data->valor = Administracao::where('status', 1)->select('valor')->limit(1)->get()[0];    
+           
         if($request->desconto){
             $data->valor_liquido = $data->valor - $request->desconto;
             $data->desconto = $request->desconto;
@@ -127,9 +126,9 @@ class LancamentosController extends Controller
             $data->valor_liquido = $data->valor * (100 - $request->porcentagem);
             $data->porcentagem = $request->porcentagem;
         }
-        
-        $data->data = $request->data;
-        $data->data_vencimento = $request->telefone2;
+        $data->data_vencimento = $request->data_vencimento;
+        //$data->data = $request->data;
+        //$data->data_vencimento = $request->telefone2;
 
         $data->updated_by = Auth::id();      
 

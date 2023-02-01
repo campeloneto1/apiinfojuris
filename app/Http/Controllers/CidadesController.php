@@ -16,7 +16,7 @@ class CidadesController extends Controller
      */
     public function index()
     {
-        return Cidade::orderBy('nome')->get();
+        return Cidade::orderBy('nome')->limit(100)->get();
     }
 
     /**

@@ -47,12 +47,27 @@ class Pessoa extends Model
      *
      * @var array
      */
-    protected $with = ['escritorio', 'nacionalidade', 'ocupacao', 'cidade'];
+    protected $with = ['escritorio', 'nacionalidade', 'ocupacao', 'cidade', 'estado_civil', 'sexo'];
 
+     public function processos()
+    {
+        return $this->belongsToMany(Processos::class, 'processos_pessoas', 'user_id', 'processo_id')->withPivot('id', 'tipo_id');
+        //return $this->hasMany(IrsoUser::class, 'user_id');
+    }
     
     public function escritorio()
     {
         return $this->belongsTo(Escritorio::class);
+    }
+
+     public function estado_civil()
+    {
+        return $this->belongsTo(EstadoCivil::class);
+    }
+
+     public function sexo()
+    {
+        return $this->belongsTo(Sexo::class);
     }
 
     public function nacionalidade()

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
            
             $table->foreignId('escritorio_id')->nullable()->constrained('escritorios')->onUpdate('cascade')->onDelete('set null');
+            $table->foreignId('filial_id')->nullable()->constrained('filiais')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('natureza_id')->nullable()->constrained('naturezas')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('vara_id')->nullable()->constrained('varas')->onUpdate('cascade')->onDelete('set null');
             $table->string('codigo', 50)->unique();            
@@ -26,7 +27,7 @@ return new class extends Migration
 
             $table->text('obs')->nullable();
 
-            $table->integer('status')->default(1);
+           $table->foreignId('status_id')->nullable()->constrained('status')->onUpdate('cascade')->onDelete('set null');
             $table->string('key', 100)->unique();
             
             $table->foreignId('created_by')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');
