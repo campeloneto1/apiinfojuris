@@ -17,8 +17,8 @@ class TribunaisSeeder extends Seeder
     {
         $init = [
             0 => [ 'nome' => 'Tribunal 01', 'key' => bcrypt('Tribunal 01')],
-            1 => [ 'nome' => 'Tribunal 01', 'key' => bcrypt('Tribunal 02')],
-            2 => [ 'nome' => 'Tribunal 01', 'key' => bcrypt('Tribunal 03')],           
+            1 => [ 'nome' => 'Tribunal 02', 'key' => bcrypt('Tribunal 02')],
+            2 => [ 'nome' => 'Tribunal 03', 'key' => bcrypt('Tribunal 03')],           
         ];
         DB::table('tribunais')->insert($init);
     }
