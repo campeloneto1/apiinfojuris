@@ -17,6 +17,8 @@ return new class extends Migration
         Schema::create('tribunais', function (Blueprint $table) {
             $table->id();
             $table->string('nome', 100);
+            $table->string('sigla', 10);
+            $table->string('codigo', 5)->nullable();
             $table->string('email', 100)->nullable();
             $table->string('telefone1', 12)->nullable();
             $table->string('telefone2', 12)->nullable();

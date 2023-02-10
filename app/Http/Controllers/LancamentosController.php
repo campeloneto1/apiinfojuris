@@ -18,7 +18,14 @@ class LancamentosController extends Controller
      */
     public function index()
     {
-        return Lancamento::orderBy('id', 'desc')->get();
+        //return Lancamento::orderBy('id', 'desc')->get();
+         //return Filial::orderBy('nome')->get();
+        $user = Auth::user();
+        if($user->perfil->administrador){
+             return Lancamento::orderBy('id', 'desc')->get();
+        }else{ 
+            return Lancamento::where('escritorio_id', $user->escritorio_id)->orderBy('id', 'desc')->get(); 
+        }  
     }
 
     /**

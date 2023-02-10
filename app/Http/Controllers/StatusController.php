@@ -103,6 +103,12 @@ class StatusController extends Controller
         $dataold = $data;
 
         $data->nome = $request->nome;   
+        $data->aberto = $request->aberto;   
+        $data->andamento = $request->andamento;   
+        $data->concluido = $request->concluido;   
+        $data->incidente = $request->incidente; 
+        $data->cancelado = $request->cancelado;   
+
 
         $data->updated_by = Auth::id();      
 

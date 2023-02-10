@@ -20,6 +20,74 @@ class UsersController extends Controller
         return User::orderBy('nome')->get();
     }
 
+     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function changPass(Request $request)
+    {
+        $data = User::find(Auth::id());
+    
+        $data->password = bcrypt($request->senha);
+
+        $data->created_by = Auth::id();      
+
+        if($data->save()){
+            $log = new Log;
+            $log->user_id = Auth::id();
+            $log->mensagem = 'Alterou a senha';
+            $log->table = 'users';
+            $log->action = 2;
+            $log->fk = $data->id;
+            $log->object = $data;
+            $log->save();
+            
+            return response()->json('Senha alterada com sucesso!', 200);
+        }else{
+            $erro = "Não foi possivel realizar o cadastro!";
+            $cod = 171;
+            $resposta = ['erro' => $erro, 'cod' => $cod];
+            return response()->json($resposta, 404);
+        }
+    }
+
+    
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function resetPass($id)
+    {
+        $data = User::find($id);
+    
+        $data->password = bcrypt($data->cpf);
+
+        $data->created_by = Auth::id();      
+
+        if($data->save()){
+            $log = new Log;
+            $log->user_id = Auth::id();
+            $log->mensagem = 'Resetou a senha';
+            $log->table = 'users';
+            $log->action = 2;
+            $log->fk = $data->id;
+            $log->object = $data;
+            $log->save();
+            
+            return response()->json('Senha alterada com sucesso!', 200);
+        }else{
+            $erro = "Não foi possivel realizar o cadastro!";
+            $cod = 171;
+            $resposta = ['erro' => $erro, 'cod' => $cod];
+            return response()->json($resposta, 404);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

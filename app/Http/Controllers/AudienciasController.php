@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Audiencia;
 use App\Models\Log;
-
+use Carbon\Carbon;
 
 class AudienciasController extends Controller
 {
@@ -22,6 +22,22 @@ class AudienciasController extends Controller
              return Audiencia::orderBy('id', 'desc')->get();
         }else{ 
             return Audiencia::whereRelation('processo','escritorio_id', $user->escritorio_id)->orderBy('id', 'desc')->get(); 
+        }        
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function calendario()
+    {
+        $dt = Carbon::now();
+        $user = Auth::user();
+        if($user->perfil->administrador){
+             return Audiencia::where('data', '>=', $dt)->orderBy('id', 'desc')->get();
+        }else{ 
+            return Audiencia::where('data', '>=', $dt)->whereRelation('processo','escritorio_id', $user->escritorio_id)->orderBy('id', 'desc')->get(); 
         }        
     }
 

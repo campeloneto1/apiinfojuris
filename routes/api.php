@@ -13,6 +13,7 @@ use App\Http\Controllers\EscritoriosController;
 use App\Http\Controllers\EstadosController;
 use App\Http\Controllers\EstadosCivisController;
 use App\Http\Controllers\FiliaisController;
+use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LancamentosController;
 use App\Http\Controllers\LogsController;
 use App\Http\Controllers\NaturezasController;
@@ -40,7 +41,7 @@ use App\Http\Controllers\VarasController;
 |
 */
 
-Route::group(['middleware' => ['guest:api']], function() {
+Route::group(['middleware' =>  ['guest:api', 'middleware' => 'throttle:5,1']], function() {
     Route::post('/login', [AuthController::class, 'login']);     
 });
 
@@ -78,5 +79,12 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('estados/{id}/where',  [EstadosController::class, 'where']);    
     Route::get('varas/{id}/where',  [VarasController::class, 'where']);
 
+    Route::get('audiencias-calendario', [AudienciasController::class, 'calendario']);
+
+    Route::post('users-changpass',  [UsersController::class, 'changPass']);
+    Route::get('users/{id}/resetpass',  [UsersController::class, 'resetPass']);
     Route::post('processos-status',  [ProcessosController::class, 'changeStatus']);
+
+    Route::get('inicio-quantporstatus', [InicioController::class, 'quantPorStatus']);
+    Route::get('inicio-proximasaudiencias', [InicioController::class, 'proximasAudiencias']);
 });
